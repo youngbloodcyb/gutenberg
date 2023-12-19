@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Check, ChevronsUpDown } from "lucide-react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { books } from "@/lib/books";
 
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -29,21 +30,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-const languages = [
-  { label: "English", value: "en" },
-  { label: "French", value: "fr" },
-  { label: "German", value: "de" },
-  { label: "Spanish", value: "es" },
-  { label: "Portuguese", value: "pt" },
-  { label: "Russian", value: "ru" },
-  { label: "Japanese", value: "ja" },
-  { label: "Korean", value: "ko" },
-  { label: "Chinese", value: "zh" },
-] as const;
-
 const FormSchema = z.object({
-  language: z.string({
-    required_error: "Please select a language.",
+  book: z.string({
+    required_error: "Please select a book.",
   }),
 });
 
@@ -61,7 +50,7 @@ export function Chat() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="language"
+          name="book"
           render={({ field }) => (
             <FormItem className="flex flex-col">
               <FormLabel>Language</FormLabel>
@@ -72,41 +61,40 @@ export function Chat() {
                       variant="outline"
                       role="combobox"
                       className={cn(
-                        "w-[200px] justify-between",
+                        "w-[400px] justify-between",
                         !field.value && "text-muted-foreground",
                       )}
                     >
                       {field.value
-                        ? languages.find(
-                            (language) => language.value === field.value,
-                          )?.label
-                        : "Select language"}
+                        ? books.find((book) => book.value === field.value)
+                            ?.label
+                        : "Select a book"}
                       <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                     </Button>
                   </FormControl>
                 </PopoverTrigger>
-                <PopoverContent className="w-[200px] p-0">
+                <PopoverContent className="w-[400px] p-0">
                   <Command>
-                    <CommandInput placeholder="Search language..." />
+                    <CommandInput placeholder="Search books..." />
                     <CommandEmpty>No language found.</CommandEmpty>
                     <CommandGroup>
-                      {languages.map((language) => (
+                      {books.map((book) => (
                         <CommandItem
-                          value={language.label}
-                          key={language.value}
+                          value={book.label}
+                          key={book.value}
                           onSelect={() => {
-                            form.setValue("language", language.value);
+                            form.setValue("book", book.value);
                           }}
                         >
                           <Check
                             className={cn(
                               "mr-2 h-4 w-4",
-                              language.value === field.value
+                              book.value === field.value
                                 ? "opacity-100"
                                 : "opacity-0",
                             )}
                           />
-                          {language.label}
+                          {book.label}
                         </CommandItem>
                       ))}
                     </CommandGroup>
@@ -114,7 +102,7 @@ export function Chat() {
                 </PopoverContent>
               </Popover>
               <FormDescription>
-                This is the language that will be used in the dashboard.
+                This is the book you will be chatting with.
               </FormDescription>
               <FormMessage />
             </FormItem>
