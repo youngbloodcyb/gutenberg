@@ -69,7 +69,7 @@ export function Chat() {
                       <Check
                         className={cn(
                           "ml-auto h-4 w-4",
-                          value === book.value ? "opacity-100" : "opacity-0"
+                          value === book.value ? "opacity-100" : "opacity-0",
                         )}
                       />
                     </CommandItem>
