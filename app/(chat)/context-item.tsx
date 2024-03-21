@@ -14,17 +14,15 @@ import {
 
 export default function ContextItem({ score, source, text }: ContextItem) {
   return (
-    <div className="border rounded-md text-sm">
-      <h3>
-        Score: <span>{(score * 100).toFixed(2)}%</span>
-      </h3>
-      <p className="text-xs">
-        Source: <span className="border-b">{source}</span>
-      </p>
+    <div className="border rounded-md text-sm p-4">
+      <h3>{(score * 100).toFixed(2)}%</h3>
+      {/* <a className="text-xs border-b" href={source}>
+        {source}
+      </a> */}
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="text">
-          <AccordionTrigger className="text-sm">Source text</AccordionTrigger>
-          <AccordionContent className="text-sm">{text}</AccordionContent>
+          <AccordionTrigger className="text-xs">Source text</AccordionTrigger>
+          <AccordionContent className="text-xs">{text}</AccordionContent>
         </AccordionItem>
       </Accordion>
     </div>

@@ -28,7 +28,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import ContextItem from "./context-item";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, SendHorizonal } from "lucide-react";
 import { books } from "@/lib/books";
 
 import { cn } from "@/lib/utils";
@@ -39,13 +39,14 @@ export function Chat() {
   const [bookValue, setBookValue] = React.useState<string | undefined>("");
   const [context, setContext] = React.useState<ContextItem[]>([]);
 
-  const { messages, input, handleInputChange, handleSubmit } = useChat({
-    api: "/api/chat",
-    body: { bookValue },
-    onFinish: async () => {
-      setGotMessages(true);
-    },
-  });
+  const { messages, input, handleInputChange, handleSubmit, isLoading } =
+    useChat({
+      api: "/api/chat",
+      body: { bookValue },
+      onFinish: async () => {
+        setGotMessages(true);
+      },
+    });
 
   const prevMessagesLengthRef = React.useRef(messages.length);
 
@@ -96,10 +97,7 @@ export function Chat() {
             </PopoverTrigger>
             <PopoverContent className="w-[400px] p-0">
               <Command>
-                <CommandInput
-                  placeholder="Search framework..."
-                  className="h-9"
-                />
+                <CommandInput placeholder="Search books..." className="h-9" />
                 <CommandEmpty>No book found.</CommandEmpty>
                 <CommandGroup>
                   {books.map((book) => (
@@ -134,17 +132,24 @@ export function Chat() {
           <div className="p-6 ">
             <ChatMessages messages={messages} />
             <form onSubmit={handleSubmit} className="space-y-6">
-              <Textarea
-                className="resize-none"
-                placeholder="Enter a prompt..."
-                value={input}
-                onChange={handleInputChange}
-                // {...field}
-              />
+              <div className="relative">
+                <Textarea
+                  className="resize-none"
+                  placeholder="Enter a prompt..."
+                  value={input}
+                  onChange={handleInputChange}
+                  // {...field}
+                />
 
-              <Button type="submit" disabled={bookValue ? false : true}>
-                Submit
-              </Button>
+                <Button
+                  className="absolute bottom-2 right-2"
+                  type="submit"
+                  size="icon"
+                  disabled={!bookValue || isLoading}
+                >
+                  <SendHorizonal />
+                </Button>
+              </div>
             </form>
           </div>
         </div>
