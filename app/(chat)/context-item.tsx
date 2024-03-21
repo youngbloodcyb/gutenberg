@@ -16,7 +16,7 @@ export default function ContextItem({ score, source, text }: ContextItem) {
   return (
     <div className="border rounded-md text-sm">
       <h3>
-        Score: <span>{score.toFixed()}</span>
+        Score: <span>{(score * 100).toFixed(2)}%</span>
       </h3>
       <p className="text-xs">
         Source: <span className="border-b">{source}</span>
