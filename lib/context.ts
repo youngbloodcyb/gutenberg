@@ -12,7 +12,7 @@ export const getContext = async (
   namespace: string,
   maxTokens = 12000,
   minScore = 0.7,
-  getOnlyText = true,
+  getOnlyText = true
 ): Promise<string | any[]> => {
   // Get the embeddings of the input message
   const embedding = await getEmbeddings(message);
