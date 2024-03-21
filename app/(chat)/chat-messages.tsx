@@ -4,7 +4,7 @@ import { useRef } from "react";
 export default function ChatMessages({ messages }: { messages: Message[] }) {
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
   return (
-    <div className="flex flex-grow flex-col justify-end overflow-y-scroll rounded-lg text-sm mb-3">
+    <div className="mb-3 flex flex-grow flex-col justify-end overflow-y-scroll rounded-lg text-sm">
       {messages.map((msg, index) => (
         <div
           key={index}
